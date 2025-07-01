@@ -1,0 +1,11 @@
+<!-- <p>{{ hero | json }}</p> -->
+<ul class="heroes">
+  @for (hero of heroes; track hero.id) {
+    <li>
+      <button [class.selected]="hero.id == selected?.id" (click)="onHeroClicked(hero)">
+        <span class="badge">{{ hero.id }}</span><span class="name">{{hero.name}}</span>
+      </button>
+    </li>
+  }
+</ul>
+

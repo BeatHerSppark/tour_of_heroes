@@ -1,16 +1,19 @@
 import { Component } from '@angular/core';
 import { RouterOutlet } from '@angular/router';
+import { Heroes } from './heroes/heroes';
+import { HeroDetail } from './hero-detail/hero-detail';
+import { Hero } from './hero';
 
 @Component({
   selector: 'app-root',
-  imports: [RouterOutlet],
-  template: `
-    <h1>Welcome to {{title}}!</h1>
-
-    <router-outlet />
-  `,
+  imports: [Heroes, HeroDetail],
+  templateUrl: './app.html',
   styles: [],
 })
 export class App {
-  protected title = 'tour_of_heroes';
+  hero: Hero | undefined;
+
+  onSelectedHero(hero: Hero) {
+    this.hero = hero;
+  }
 }
