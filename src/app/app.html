@@ -6,7 +6,11 @@
   <title>Heroes App</title>
 </head>
 <body>
-  <heroes (selectedHero)="onSelectedHero($event)" [selected]="hero" />
-  <hero-detail [hero]="hero" />
+  <h1>Heroes app</h1>
+  <nav>
+    <a [routerLink]="['heroes']" routerLinkActive="active">Heroes</a>
+    <a [routerLink]="['dashboard']" routerLinkActive="active">Dashboard</a>
+  </nav>
+  <router-outlet></router-outlet>
 </body>
 </html>

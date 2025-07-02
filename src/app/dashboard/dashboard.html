@@ -1,0 +1,7 @@
+@for (hero of heroes; track hero.id) {
+  <a [routerLink]="['/hero-detail', hero.id]">
+    <div>
+      {{hero.name}}
+    </div>
+  </a>
+}
