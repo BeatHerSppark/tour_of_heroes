@@ -1,20 +1,28 @@
 import { Injectable } from "@angular/core";
 import { Hero } from "./hero";
 import { HEROES } from "./mock-heroes";
+import { delay, map, Observable, of } from "rxjs";
 
 @Injectable({
     providedIn: 'root',
 })
 export class HeroesService {
-    getTopHeroes(n: number): Hero[] {
-        return this.getHeroes().slice(0, n);
+
+    getHeroes(): Observable<Hero[]> {
+        return of(HEROES).pipe(
+            delay(1500)
+        );
     }
 
-    getHeroes(): Hero[] {
-        return HEROES;
+    getHeroById(id: number): Observable<Hero | undefined> {
+        return this.getHeroes().pipe(
+            map(result => result.find(it => it.id === id))
+        );
     }
 
-    getHeroById(id: number): Hero | undefined {
-        return this.getHeroes().find(hero => hero.id === id);
+    getTopHeroes(n: number): Observable<Hero[]> {
+        return this.getHeroes().pipe(
+            map(result => result.slice(0, n))
+        );
     }
 }

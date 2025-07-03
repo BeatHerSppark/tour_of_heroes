@@ -2,7 +2,7 @@ import { Component, inject, Input, OnInit } from '@angular/core';
 import { Hero } from '../hero';
 import { HeroesService } from '../heroes.service';
 import { ActivatedRoute, RouterLink } from '@angular/router';
-import { filter, map, tap } from 'rxjs';
+import { filter, map, mergeMap, tap } from 'rxjs';
 
 @Component({
   selector: 'hero-detail',
@@ -22,11 +22,17 @@ export class HeroDetail implements OnInit {
         // if(id) {
         //     this.hero = this.service.getHeroById(+id);
         // }
+
         this.activatedRoute.paramMap.pipe(
             map(paramMap => paramMap.get('id')),
-            tap(it => this.id = it),
             filter(id => id != null),
-            map(id => this.service.getHeroById(+id))
-        ).subscribe(hero => (this.hero = hero));
+            // flatMap aka go vadi genericot od Observable i se koristi direktno vo subscribe
+            mergeMap(id => this.service.getHeroById(+id).pipe(
+                map(hero => ({id, hero}))
+            ))
+        ).subscribe(({id, hero}) => {
+            this.hero = hero;
+            this.id = id;
+        });
     }
 }
